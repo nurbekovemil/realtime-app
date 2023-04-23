@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TextField, Stack, Box, Autocomplete, CircularProgress, InputBase } from '@mui/material/';
+import { TextField, Stack, Box, Autocomplete } from '@mui/material/';
 import useDebounce from '../../hooks/debounce'
 import { useLazySearchUsersQuery } from '../../store/services/user'
 import { useAppSelector } from '../../hooks/redux';
@@ -8,7 +8,7 @@ import SearchItem from './UserSearchItem';
 const UserSearch = () => {
   const [searchName, setSearchName] = useState('')
   const debouncedName = useDebounce(searchName, 500)
-  const [searchUsers, { isLoading, isFetching }] = useLazySearchUsersQuery()
+  const [searchUsers, { isLoading }] = useLazySearchUsersQuery()
   const users = useAppSelector(state => state.user.users)
 
   useEffect(() => {
@@ -38,20 +38,12 @@ const UserSearch = () => {
             <SearchItem user={option} key={option.name} />
           )}
           renderInput={(params) => <TextField
-
             {...params}
             size='small'
             onChange={(e) => setSearchName(e.target.value)}
-            placeholder='Search users'
+            placeholder='Search'
             InputProps={{
               ...params.InputProps,
-
-              endAdornment: (
-                <>
-                  {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </>
-              ),
             }}
           />}
         />

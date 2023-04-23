@@ -14,6 +14,9 @@ import { Chat } from './chats.entity';
 
 @Table({ tableName: 'chat_users', timestamps: false })
 export class ChatUser extends Model<ChatUser> {
+  users(users: any): any {
+    throw new Error('Method not implemented.');
+  }
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -31,7 +34,7 @@ export class ChatUser extends Model<ChatUser> {
   userId: number;
 
   @BelongsTo(() => User)
-  user: User;
+  user: User[];
 
   @BelongsTo(() => Chat)
   chat: Chat;

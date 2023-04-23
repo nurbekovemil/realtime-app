@@ -4,7 +4,7 @@ import { IUserSearchItemProps } from '../../models/IUser';
 import { useCreateChatMutation } from '../../store/services/chat'
 
 const UserSearchItem: FC<IUserSearchItemProps> = ({ user }) => {
-  const [createChat, result] = useCreateChatMutation()
+  const [createChat] = useCreateChatMutation()
   const createChatHandler = () => {
     createChat({ user_id: user.id })
   }

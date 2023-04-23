@@ -1,55 +1,48 @@
-import { useEffect, useRef, useState } from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
+import { useEffect } from 'react';
+import { Box, Drawer } from '@mui/material';
+import { useAppDispatch, useAppSelector } from '../hooks/redux'
+import { useLazyGetUserChatsQuery } from '../store/services/chat'
+import { addLastMessageChatList, addMessageCurrentChat, setCurrentChat } from '../store/slices/chat';
 import ChatList from '../components/chat/ChatList';
-import { useAppSelector } from '../hooks/redux'
 import UserSearch from '../components/user/UserSearch';
 import ChatForm from '../components/chat/ChatForm';
-import { useGetUserChatsQuery } from '../store/services/chat'
-import { socket } from '../socket';
 import MessageList from '../components/message/MessageList';
-import { Avatar } from '@mui/material';
+import ChatHeader from '../components/chat/ChatHeader';
+import { socket } from '../socket';
 
 const drawerWidth = 300;
 
 const Chat = () => {
   const { currentChat } = useAppSelector(state => state.chat)
-  const { isAuthenticated, user } = useAppSelector(state => state.auth)
-  const [chatName, setChatName] = useState('')
-  const { isFetching, isLoading, data } = useGetUserChatsQuery('')
+  const { isAuthenticated } = useAppSelector(state => state.auth)
 
+  const [getUserChats] = useLazyGetUserChatsQuery()
+  const dispatch = useAppDispatch()
   useEffect(() => {
+
     if (isAuthenticated) {
+      getUserChats('')
+      socket.auth = {
+        token: localStorage.getItem('token') || '',
+      }
       socket.connect()
+      socket.on("userChats", (data) => {
+        getUserChats('')
+      })
+      socket.on("receivedMessage", (data) => {
+        dispatch(addMessageCurrentChat(data));
+        dispatch(addLastMessageChatList(data))
+
+      });
+      socket.on('connect_error', (err) => {
+        console.log(err)
+      })
     }
-    if (currentChat) {
-      setChatName(currentChat.users.filter(item => user && item.id != user.id)[0].name)
-    }
-  }, [isAuthenticated, currentChat])
+  }, [isAuthenticated])
+
   return (
     <Box sx={{ display: 'flex' }}>
-      {
-        currentChat && <AppBar
-          elevation={0}
-          position="fixed"
-          color='inherit'
-          sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
-        >
-          <Toolbar>
-            <Avatar sx={{ mr: 1 }}>{chatName[0]}</Avatar>
-            <Typography variant="h6" noWrap component="div" >
-              {chatName}
-            </Typography>
-          </Toolbar>
-          <Divider />
-        </AppBar>
-      }
-
-
+      {currentChat && <ChatHeader currentChat={currentChat} drawerWidth={drawerWidth} />}
       <Drawer
         sx={{
           width: drawerWidth,
@@ -66,20 +59,20 @@ const Chat = () => {
         <UserSearch />
         <ChatList drawerWidth={drawerWidth} />
       </Drawer>
-      <Box
-        component="main"
-
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          py: 10,
-        }}
-      >
-
-        {currentChat && <MessageList messages={currentChat?.messages} />}
-      </Box>
-
-      {currentChat && <ChatForm drawerWidth={drawerWidth} />}
+      {currentChat &&
+        <>
+          <Box component="main"
+            sx={{
+              flexGrow: 1,
+              p: 3,
+              py: 10,
+            }}
+          >
+            <MessageList messages={currentChat?.messages} />
+          </Box>
+          <ChatForm drawerWidth={drawerWidth} currentChat={currentChat} />
+        </>
+      }
     </Box>
   );
 }

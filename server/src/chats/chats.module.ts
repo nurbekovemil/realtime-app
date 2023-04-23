@@ -10,10 +10,12 @@ import { WSgateway } from './chats.gateway';
 import { User } from 'src/users/users.entity';
 import { ChatUser } from './entities/chat-user.entity';
 import { Message } from 'src/messages/messages.entity';
+import { AuthModule } from 'src/auth/auth.module';
 // import { WSgateway } from './chats.gateway';
 
 @Module({
   imports: [
+    AuthModule,
     MessagesModule,
     UsersModule,
     JwtModule,
@@ -21,6 +23,6 @@ import { Message } from 'src/messages/messages.entity';
   ],
   controllers: [ChatsController],
   providers: [ChatsService, WSgateway],
-  exports: [],
+  exports: [ChatsService],
 })
 export class ChatsModule {}

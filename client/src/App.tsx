@@ -1,13 +1,15 @@
-import React from 'react';
+
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Auth from './pages/Auth';
 import Home from './pages/Home';
 import Chat from './pages/Chat';
-
+import moment from 'moment';
+import 'moment/locale/ru';
 import Public from './layouts/Public';
 import Private from './layouts/Private';
 function App() {
+  moment.locale('ru')
   return (
     <BrowserRouter>
       <Routes>

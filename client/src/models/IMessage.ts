@@ -5,3 +5,8 @@ export interface IMessage {
   chatId: number;
   createdAt: string;
 }
+
+export interface IMessageListItemProps {
+  message: IMessage;
+  color: string;
+}

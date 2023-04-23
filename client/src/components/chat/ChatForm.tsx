@@ -1,35 +1,18 @@
-import { FC, useEffect, useState } from 'react'
-import { AppBar, Toolbar, IconButton, FormControl, OutlinedInput, InputAdornment, InputBase } from '@mui/material/';
+import { FC, useState } from 'react'
+import { AppBar, Toolbar, IconButton, FormControl, InputAdornment, InputBase } from '@mui/material/';
 import SendIcon from '@mui/icons-material/Send';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { } from '../../store/services/chat'
 import { socket } from '../../socket';
-import { addLastMessageChatList, addMessageCurrentChat } from '../../store/slices/chat';
+import { IChatProps } from '../../models/IChat';
 
-interface IChatFormProps {
-  drawerWidth: number;
-}
-const ChatForm: FC<IChatFormProps> = ({ drawerWidth }) => {
 
-  const dispatch = useAppDispatch()
-
+const ChatForm: FC<IChatProps> = ({ drawerWidth, currentChat }) => {
   const [messageText, setMessageText] = useState('')
-  const { currentChat } = useAppSelector(state => state.chat)
-
-  useEffect(() => {
-    socket.on("receivedMessage", (data) => {
-      dispatch(addMessageCurrentChat(data));
-      dispatch(addLastMessageChatList(data))
-    });
-  }, [])
-
   const sendMessage = () => {
     if (messageText.trim() != '') {
       socket.emit('sendMessage', { content: messageText, chatId: currentChat?.id })
     }
     setMessageText('')
   }
-
   const sendHandler = () => {
     sendMessage()
   }
@@ -39,9 +22,25 @@ const ChatForm: FC<IChatFormProps> = ({ drawerWidth }) => {
     }
   }
   return (
-    <AppBar position="fixed" color="inherit" sx={{ minHeight: 64, top: 'auto', bottom: 0, width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}>
+    <AppBar
+      position="fixed"
+      color="inherit"
+      sx={{
+        minHeight: 64,
+        top: 'auto',
+        bottom: 0,
+        width: `calc(100% - ${drawerWidth}px)`,
+        ml: `${drawerWidth}px`
+      }}>
       <Toolbar>
-        <FormControl sx={{ width: '100%' }} size='small' variant="outlined" focused={false}>
+        <FormControl
+          sx={{
+            width: '100%'
+          }}
+          size='small'
+          variant="outlined"
+          focused={false}
+        >
           <InputBase
             placeholder='Write a message...'
             onKeyPress={enterHandler}

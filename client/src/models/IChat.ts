@@ -19,3 +19,8 @@ export interface IChatListItemProps {
   currentChat: IChat | null;
   user: IUser | null;
 }
+
+export interface IChatProps {
+  drawerWidth: number;
+  currentChat: IChat;
+}

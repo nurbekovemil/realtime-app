@@ -2,6 +2,8 @@ export interface IUser {
   id: number;
   name: string;
   email: string;
+  status: boolean;
+  updatedAt: string;
 }
 
 export interface IUserInitialState {

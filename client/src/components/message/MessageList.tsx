@@ -1,5 +1,5 @@
-import { FC, useEffect, useRef, Fragment } from 'react';
-import { Grid, List } from '@mui/material/';
+import { FC, useEffect, useRef } from 'react';
+import { Grid } from '@mui/material/';
 import { useAppSelector } from '../../hooks/redux';
 import { IMessage } from '../../models/IMessage';
 import MessageListItem from './MessageListItem';

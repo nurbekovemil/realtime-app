@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 const Home: FC = () => {
   return (
-    <div>Home</div>
+    <div>Home page</div>
   )
 }
 

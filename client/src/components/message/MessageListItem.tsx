@@ -1,11 +1,9 @@
 import { FC } from 'react'
-import { IMessage } from '../../models/IMessage'
+import { IMessageListItemProps } from '../../models/IMessage'
 
-import { Paper, Typography, colors } from '@mui/material';
-interface IMessageListItemProps {
-  message: IMessage;
-  color: string
-}
+import { Paper, Typography } from '@mui/material';
+
+
 
 const MessageListItem: FC<IMessageListItemProps> = ({ message, color }) => {
   return (

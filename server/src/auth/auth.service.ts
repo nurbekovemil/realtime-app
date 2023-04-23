@@ -69,8 +69,13 @@ export class AuthService {
     };
     const token = await this.JwtService.sign(payload, {
       secret: process.env.PRIVATE_JWT_KEY,
-      expiresIn: '1h',
+      expiresIn: '4h',
     });
     return token;
+  }
+  async verifyToken(token: string) {
+    return await this.JwtService.verify(token.toString(), {
+      secret: process.env.PRIVATE_JWT_KEY,
+    });
   }
 }

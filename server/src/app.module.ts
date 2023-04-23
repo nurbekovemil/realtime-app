@@ -26,6 +26,7 @@ import { ChatUser } from './chats/entities/chat-user.entity';
       database: process.env.DB_NAME,
       models: [User, Chat, ChatUser, Message],
       autoLoadModels: true,
+      timezone: '+06:00',
     }),
     UsersModule,
     MessagesModule,

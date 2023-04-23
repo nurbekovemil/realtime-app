@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { Link, Grid, Container } from '@mui/material/';
 import { createTheme, ThemeProvider } from '@mui/material/styles';

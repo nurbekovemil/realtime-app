@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IChatInitialState } from "../../models/IChat";
 import { chatApi } from "../services/chat";
-import { IMessage } from "../../models/IMessage";
 
 const initialState: IChatInitialState = {
   currentChat: null,

@@ -31,10 +31,16 @@ export class User extends Model<User, UserCreateAttrs> {
   name: string;
 
   @Column({ type: DataType.STRING })
-  password: number;
+  password: string;
 
   @Column({ type: DataType.STRING, unique: true })
-  email: number;
+  email: string;
+
+  @Column({ type: DataType.BOOLEAN, defaultValue: false })
+  status: boolean;
+
+  @Column({ type: DataType.STRING, defaultValue: null })
+  socketId: string;
 
   @BelongsToMany(() => Chat, () => ChatUser)
   chats: ChatUser[];

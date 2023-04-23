@@ -10,7 +10,7 @@ const ChatList: FC<IChatListProps> = () => {
   const { chats, currentChat } = useAppSelector(state => state.chat)
   const { user } = useAppSelector(state => state.auth)
   return (
-    <List component="nav" aria-labelledby="nested-list-subheader" sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', pt: 0 }}>
+    <List component="nav" aria-labelledby="nested-list-subheader" sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper', py: 0 }}>
       {
         chats.map(chat => <ChatListItem chat={chat} currentChat={currentChat} key={chat.id} user={user} />)
       }
