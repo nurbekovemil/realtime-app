@@ -45,7 +45,7 @@ A real-time web application built with modern frontend and backend technologies.
 5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Future Enhancements
-- Add user authentication
+- Add user authentication and role management
 - Expand testing coverage (unit and integration tests)
 - Optimize performance for production deployment
 
