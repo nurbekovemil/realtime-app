@@ -2,9 +2,6 @@
 
 A real-time web application built with modern frontend and backend technologies.
 
-## Demo
-You can access the live version here: [Realtime App Demo](https://your-live-app-link.com) (add the link if available).
-
 ## Tech Stack
 - **Frontend**: React, TypeScript, Redux Toolkit, RTK Query, Socket.IO-client
 - **Backend**: NestJS, Socket.IO
