@@ -51,6 +51,3 @@ A real-time web application built with modern frontend and backend technologies.
 
 ## Author
 - **Emil Nurbekov** - [GitHub Profile](https://github.com/nurbekovemil)
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
